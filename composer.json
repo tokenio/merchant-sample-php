@@ -1,5 +1,5 @@
 {
-  "name": "tokenio/merchant-sample-php",
+  "name": "tokenio/merchant-sample",
   "description": "PHP merchant sample with Slim framework for interacting with the Token System",
   "homepage": "https://token.io",
   "authors": [
@@ -20,7 +20,7 @@
     "slim/slim": "^3.1",
     "slim/php-view": "^2.0",
     "monolog/monolog": "^1.17",
-    "tokenio/sdk-php": "dev-dev"
+    "tokenio/sdk": "dev-dev"
   },
   "scripts": {
     "start": "php -S localhost:9090 -t public"
