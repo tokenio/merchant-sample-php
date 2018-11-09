@@ -1,0 +1,6 @@
+*.log
+vendor
+.DS_Store
+.idea/
+composer.lock
+keys
