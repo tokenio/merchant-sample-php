@@ -5,7 +5,9 @@ experience on a simple web server.
 You can learn more about the Quick Checkout flow and relevant APIs at the
 [Merchant Quick Checkout documentation](https://developer.token.io/merchant-checkout/).
 
-To run this code, you need PHP 5.5.0 or later.
+To run this code, you need PHP 5.5.0 or later and the [gRPC PHP extension](https://grpc.io/docs/quickstart/php.html#install-the-grpc-php-extension).
+
+To install dependencies: `composer install`
 
 To run, `composer start`
 
