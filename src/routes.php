@@ -101,7 +101,7 @@ class TokenSample
         $tokenBuilder->setToMemberId($this->member->getMemberId());
 
         $request = TokenRequest::builder($tokenBuilder->build())
-            ->addOption(TokenRequestOptions::REDIRECT_URL, 'http://localhost:9090/redeem')
+            ->addOption(TokenRequestOptions::REDIRECT_URL, 'http://localhost:3000/redeem')
             ->build();
 
         $requestId = $this->member->storeTokenRequest($request);

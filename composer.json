@@ -8,21 +8,17 @@
       "homepage": "https://token.io"
     }
   ],
-  "minimum-stability": "dev",
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/tokenio/sdk-php"
-    }
-  ],
   "require": {
     "php": ">=5.5.0",
     "slim/slim": "^3.1",
     "slim/php-view": "^2.0",
     "monolog/monolog": "^1.17",
-    "tokenio/sdk": "dev-dev"
+    "tokenio/sdk": "^0.0.1"
+  },
+  "config": {
+    "process-timeout" : 0
   },
   "scripts": {
-    "start": "php -S localhost:9090 -t public"
+    "start": "php -S localhost:3000 -t public"
   }
 }

@@ -18,11 +18,11 @@ In subsequent runs, the server uses this ID these keys to log the Member in.
 The server operates in Token's Sandbox environment. This testing environment
 lets you try out UI and payment flows without moving real money.
 
-The server shows a web page at `localhost:9090`. The page has a checkout button.
+The server shows a web page at `localhost:3000`. The page has a checkout button.
 Clicking the button starts the Token merchant payment flow.
 The server handles endorsed payments by redeeming tokens.
 
-Test by going to `localhost:9090`.
+Test by going to `localhost:3000`.
 You can't get far until you create a customer member as described at the
 [Merchant Quick Checkout documentation](https://developer.token.io/merchant-checkout/).
 
