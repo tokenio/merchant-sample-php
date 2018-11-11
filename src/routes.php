@@ -10,6 +10,7 @@ use Tokenio\Http\Request\TokenRequest;
 use Tokenio\Http\Request\TokenRequestOptions;
 use Tokenio\Http\Request\TransferTokenBuilder;
 use Tokenio\Security\UnsecuredFileSystemKeyStore;
+use Tokenio\Util\Strings;
 
 class TokenSample
 {
@@ -20,12 +21,14 @@ class TokenSample
      */
     private $keyStore;
 
+    private $keyStoreDirectory;
     private $tokenIO;
     private $member;
 
     public function __construct()
     {
-        $this->keyStore = new UnsecuredFileSystemKeyStore(__DIR__ . '/../keys/');
+        $this->keyStoreDirectory = __DIR__ . '/../keys/';
+        $this->keyStore = new UnsecuredFileSystemKeyStore($this->keyStoreDirectory);
 
         $this->tokenIO = $this->initializeSDK();
         $this->member = $this->initializeMember();
@@ -42,12 +45,36 @@ class TokenSample
 
     private function initializeMember()
     {
-        $memberId = $this->keyStore->getFirstMemberId();
+        $memberId = $this->getFirstMemberId();
         if (!empty($memberId)) {
             return $this->loadMember($memberId);
         } else {
             return $this->createMember();
         }
+    }
+
+    /**
+     * Finds the first member id in keystore
+     *
+     * @return string|null
+     */
+    private function getFirstMemberId()
+    {
+        $directory = $this->keyStoreDirectory;
+
+        if (!file_exists($directory) || !is_dir($directory)) {
+            return null;
+        }
+
+        $files = array_diff(scandir($directory), array('.', '..'));
+        foreach ($files as $file) {
+            $filePath = $directory . DIRECTORY_SEPARATOR . $file;
+            if (is_file($filePath)) {
+                return str_replace('_', ':', $file);
+            }
+        }
+
+        return null;
     }
 
     private function loadMember($memberId)
@@ -57,8 +84,7 @@ class TokenSample
 
     private function createMember()
     {
-        $time = ceil(time() / 60 * 5); // Update member account every 5 minutes
-        $email = 'asphp-' . $time . '+noverify@example.com';
+        $email = 'asphp-' . Strings::generateNonce() . '+noverify@example.com';
 
         $alias = new Alias();
         $alias->setType(Alias\Type::EMAIL);
