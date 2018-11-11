@@ -84,7 +84,7 @@ class TokenSample
 
     private function createMember()
     {
-        $email = 'asphp-' . Strings::generateNonce() . '+noverify@example.com';
+        $email = 'msphp-' . Strings::generateNonce() . '+noverify@example.com';
 
         $alias = new Alias();
         $alias->setType(Alias\Type::EMAIL);
