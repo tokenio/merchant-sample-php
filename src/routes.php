@@ -3,12 +3,12 @@
 use Io\Token\Proto\Common\Account\BankAccount;
 use Io\Token\Proto\Common\Alias\Alias;
 use Io\Token\Proto\Common\Transferinstructions\TransferEndpoint;
-use Tokenio\Config\TokenCluster;
-use Tokenio\Config\TokenEnvironment;
-use Tokenio\Config\TokenIoBuilder;
-use Tokenio\Http\Request\TokenRequest;
-use Tokenio\Http\Request\TokenRequestOptions;
-use Tokenio\Http\Request\TransferTokenBuilder;
+use Tokenio\TokenCluster;
+use Tokenio\TokenEnvironment;
+use Tokenio\TokenIoBuilder;
+use Tokenio\Rpc\Request\TokenRequest;
+use Tokenio\Rpc\Request\TokenRequestOptions;
+use Tokenio\Rpc\Request\TransferTokenBuilder;
 use Tokenio\Security\UnsecuredFileSystemKeyStore;
 use Tokenio\Util\Strings;
 
