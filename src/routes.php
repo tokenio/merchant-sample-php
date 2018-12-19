@@ -5,10 +5,10 @@ use Io\Token\Proto\Common\Alias\Alias;
 use Io\Token\Proto\Common\Transferinstructions\TransferEndpoint;
 use Tokenio\TokenCluster;
 use Tokenio\TokenEnvironment;
-use Tokenio\TokenIoBuilder;
-use Tokenio\Rpc\Request\TokenRequest;
-use Tokenio\Rpc\Request\TokenRequestOptions;
-use Tokenio\Rpc\Request\TransferTokenBuilder;
+use Tokenio\TokenClientBuilder;
+use Tokenio\TokenRequest;
+use Tokenio\TokenRequestOptions;
+use Tokenio\TransferTokenBuilder;
 use Tokenio\Security\UnsecuredFileSystemKeyStore;
 use Tokenio\Util\Strings;
 
@@ -36,7 +36,7 @@ class TokenSample
 
     private function initializeSDK()
     {
-        $builder = new TokenIoBuilder();
+        $builder = new TokenClientBuilder();
         $builder->connectTo(TokenCluster::get(TokenEnvironment::SANDBOX));
         $builder->developerKey(self::DEVELOPER_KEY);
         $builder->withKeyStore($this->keyStore);
