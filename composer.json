@@ -14,7 +14,7 @@
     "slim/slim": "^3.1",
     "slim/php-view": "^2.0",
     "monolog/monolog": "^1.17",
-    "tokenio/sdk": "^0.0.2"
+    "tokenio/sdk": "^0.0.4"
   },
   "config": {
     "process-timeout" : 0
