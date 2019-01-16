@@ -2,8 +2,8 @@
 
 This sample code shows how to enable the Token Merchant Checkout
 experience on a simple web server.
-You can learn more about the Quick Checkout flow and relevant APIs at the
-[Merchant Quick Checkout documentation](https://developer.token.io/merchant-checkout/).
+You can learn more about the Quick Checkout flow and relevant APIs at
+[Token Request](https://developer.token.io/token-request/).
 
 To run this code, you need PHP 5.5.0 or later and the [gRPC PHP extension](https://grpc.io/docs/quickstart/php.html#install-the-grpc-php-extension).
 
