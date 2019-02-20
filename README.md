@@ -2,8 +2,8 @@
 
 This sample code shows how to enable the Token Merchant Checkout
 experience on a simple web server.
-You can learn more about the Quick Checkout flow and relevant APIs at the
-[Merchant Quick Checkout documentation](https://developer.token.io/merchant-checkout/).
+You can learn more about the Quick Checkout flow and relevant APIs at
+[Token Request](https://developer.token.io/token-request/).
 
 To run this code, you need PHP 5.5.0 or later and the [gRPC PHP extension](https://grpc.io/docs/quickstart/php.html#install-the-grpc-php-extension).
 
@@ -25,8 +25,6 @@ The page has a checkout button. Clicking the button starts the Token merchant pa
 The server handles endorsed payments by redeeming tokens.
 
 Test by going to `localhost:3000`.
-You can't get far until you create a customer member as described at the
-[Merchant Quick Checkout documentation](https://developer.token.io/merchant-checkout/).
 
 This code uses a publicly-known developer key (the devKey line in the
 initializeSDK method). This normally works, but don't be surprised if
