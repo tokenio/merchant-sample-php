@@ -77,6 +77,8 @@ function createPopupButton() {
         // build success URL
         var successURL = "/redeem"
             + "?tokenId=" + window.encodeURIComponent(data.tokenId);
+
+        alert(successURL);
         // navigate to success URL
         window.location.assign(successURL);
     });
@@ -87,7 +89,7 @@ function createPopupButton() {
     });
 }
 
-function getTokenRequestUrl(done) {
+function  getTokenRequestUrl(done) {
     var XHR = new XMLHttpRequest();
 
     //set up the access request
