@@ -87,7 +87,7 @@ function createPopupButton() {
     });
 }
 
-function  getTokenRequestUrl(done) {
+function getTokenRequestUrl(done) {
     var XHR = new XMLHttpRequest();
 
     //set up the access request
