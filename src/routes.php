@@ -31,7 +31,7 @@ class TokenSample
         /** @var UnsecuredFileSystemKeyStore */
         $keyStore = new UnsecuredFileSystemKeyStore($keyStoreDirectory);
         $builder = new TokenClientBuilder();
-        $builder->connectTo(TokenCluster::get(TokenEnvironment::DEVELOPMENT));
+        $builder->connectTo(TokenCluster::get(TokenEnvironment::SANDBOX));
         $builder->withKeyStore($keyStore);
         return $builder->build();
     }
@@ -140,6 +140,7 @@ $app->get('/', function ($request, $response, array $args) {
 
 $app->post('/transfer', function ($request, $response, array $args) {
     $this->logger->info("Request transfer.");
+
     $csrf = Strings::generateNonce();
     setcookie("csrf_token", $csrf);
     $tokenIo = new TokenSample();
@@ -149,8 +150,6 @@ $app->post('/transfer', function ($request, $response, array $args) {
 $app->get('/redeem', function ($request, $response, array $args) {
     $this->logger->info("Request redeem.");
 
-//    $queryParams = $request->getQuery();
-//    echo $queryParams;
     $tokenSample = new TokenSample();
     $callback = $tokenSample->getTokenRequestCallback($request->getUri(), $request->getCookieParams()["csrf_token"]);
     $member = $tokenSample->getMember();
