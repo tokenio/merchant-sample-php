@@ -144,7 +144,7 @@ $app->post('/transfer', function ($request, $response, array $args) {
     $csrf = Strings::generateNonce();
     setcookie("csrf_token", $csrf);
     $tokenIo = new TokenSample();
-    return $response->withRedirect($tokenIo->generateTokenRequestUrl($request->getParsedBody(), $csrf), 302);
+    return $tokenIo->generateTokenRequestUrl($request->getParsedBody(), $csrf);
 });
 
 $app->get('/redeem', function ($request, $response, array $args) {
