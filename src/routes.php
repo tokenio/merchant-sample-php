@@ -97,8 +97,9 @@ class TokenSample
         return $this->member;
     }
 
-    public function generateTokenRequestUrl($data, $csrfToken)
+    public function generateTokenRequestUrl($data, $csrfToken, $baseUrl)
     {
+        $redirectUrl = $baseUrl . "/redeem";
         $destinationData = json_decode($data['destination'], true);
         $sepa = new BankAccount\Sepa();
         $sepa->setIban($destinationData['sepa']['iban']);
@@ -120,7 +121,7 @@ class TokenSample
             ->setRefId(Strings::generateNonce())
             ->setToAlias($alias)
             ->setToMemberId($this->member->getMemberId())
-            ->setRedirectUrl('http://localhost:3000/redeem')
+            ->setRedirectUrl($redirectUrl)
             ->setCsrfToken($csrfToken)
             ->build();
         $requestId = $this->member->storeTokenRequest($request);
@@ -144,7 +145,8 @@ $app->post('/transfer', function ($request, $response, array $args) {
     $csrf = Strings::generateNonce();
     setcookie("csrf_token", $csrf);
     $tokenIo = new TokenSample();
-    return $tokenIo->generateTokenRequestUrl($request->getParsedBody(), $csrf);
+    $uri = $request->getUri();
+    return $tokenIo->generateTokenRequestUrl($request->getParsedBody(), $csrf, $uri->getBaseUrl());
 });
 
 $app->get('/redeem', function ($request, $response, array $args) {
