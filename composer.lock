@@ -1171,16 +1171,16 @@
         },
         {
             "name": "tokenio/sdk",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tokenio/sdk-php.git",
-                "reference": "446d8b2b68ab3a7adf675e15f96ac407c668fded"
+                "reference": "563fe0150540f8dd5116d548c806e92704f83370"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tokenio/sdk-php/zipball/446d8b2b68ab3a7adf675e15f96ac407c668fded",
-                "reference": "446d8b2b68ab3a7adf675e15f96ac407c668fded",
+                "url": "https://api.github.com/repos/tokenio/sdk-php/zipball/563fe0150540f8dd5116d548c806e92704f83370",
+                "reference": "563fe0150540f8dd5116d548c806e92704f83370",
                 "shasum": ""
             },
             "require": {
