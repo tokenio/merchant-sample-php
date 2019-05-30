@@ -85,6 +85,7 @@ class TokenSample
 
         $member =  $this->tokenClient->createMember($alias);
         $member->setProfile((new \Io\Token\Proto\Common\Member\Profile())->setDisplayNameFirst("Merchant Demo"));
+        $member->setProfilePicture("image/png", file_get_contents("southside.png"));
 
         return $member;
     }
