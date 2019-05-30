@@ -97,12 +97,11 @@ class TokenSample
         return $this->member;
     }
 
-    public function generateTokenRequestUrl($data, $csrfToken, $baseUrl)
+    public function generateTokenRequestUrl($data, $csrfToken, $redirectUrl)
     {
-        $redirectUrl = $baseUrl . "/redeem";
-        $destinationData = json_decode($data['destination'], true);
+        $iban = "DE16700222000072880129";
         $sepa = new BankAccount\Sepa();
-        $sepa->setIban($destinationData['sepa']['iban']);
+        $sepa->setIban($iban);
 
         $destination = new BankAccount();
         $destination->setSepa($sepa);
@@ -139,18 +138,51 @@ $app->get('/', function ($request, $response, array $args) {
     return $this->renderer->render($response, 'index.phtml', $args);
 });
 
-$app->post('/transfer', function ($request, $response, array $args) {
-    $this->logger->info("Request transfer.");
+$app->get('/transfer', function ($request, $response, array $args) {
+    $this->logger->info("Request transfer (redirect).");
 
     $csrf = Strings::generateNonce();
     setcookie("csrf_token", $csrf);
     $tokenIo = new TokenSample();
     $uri = $request->getUri();
-    return $tokenIo->generateTokenRequestUrl($request->getParsedBody(), $csrf, $uri->getBaseUrl());
+    $data = $request->getQueryParams();
+    $tokenRequestUrl = $tokenIo->generateTokenRequestUrl(
+        $data,
+        $csrf,
+        $uri->getBaseUrl() . "/redeem"
+    );
+    return $response->withRedirect($tokenRequestUrl, 302);
+});
+
+$app->post('/transfer-popup', function ($request, $response, array $args) {
+    $this->logger->info("Request transfer (popup).");
+
+    $csrf = Strings::generateNonce();
+    setcookie("csrf_token", $csrf);
+    $tokenIo = new TokenSample();
+    $uri = $request->getUri();
+    return $tokenIo->generateTokenRequestUrl(
+        $request->getParsedBody(),
+        $csrf,
+        $uri->getBaseUrl() . "/redeem-popup"
+    );
 });
 
 $app->get('/redeem', function ($request, $response, array $args) {
-    $this->logger->info("Request redeem.");
+    $this->logger->info("Request redeem (redirect).");
+
+    $tokenSample = new TokenSample();
+    $callback = $tokenSample->getTokenRequestCallback($request->getUri(), $request->getCookieParams()["csrf_token"]);
+    $member = $tokenSample->getMember();
+    $token = $member->getToken($callback->getTokenId());
+
+    $transfer = $member->redeemToken($token);
+
+    return 'Success! Redeemed transfer ' . $transfer->getId();
+});
+
+$app->get('/redeem-popup', function ($request, $response, array $args) {
+    $this->logger->info("Request redeem (popup).");
 
     $tokenSample = new TokenSample();
     $callback = $tokenSample->getTokenRequestCallback($request->getUri(), $request->getCookieParams()["csrf_token"]);
