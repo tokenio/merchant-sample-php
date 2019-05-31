@@ -1,0 +1,8 @@
+keys
+vendor
+*.log
+.DS_Store
+.git
+.gitignore
+.dockerignore
+Dockerfile
