@@ -92,7 +92,7 @@ function createPopupButton() {
     );
 }
 
-function redirectTokenRequest() {
+function redirectTokenRequest(done) {
     var data = {
         amount: 4.99,
         currency: 'EUR',
@@ -103,7 +103,7 @@ function redirectTokenRequest() {
     var queryString = Object.keys(data).map(key => key + '=' + window.encodeURIComponent(data[key])).join('&');
 
     // go to transfer
-    document.location.assign("/transfer?" + queryString);
+    done("/transfer?" + queryString);
 }
 
 // set up a function using the item data to populate the request to fetch the Token Request Function
