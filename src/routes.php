@@ -121,16 +121,15 @@ class TokenSample
         $transferEndpoint->setAccount($destination);
 
         //////////////
-        $tokenBuilder = new TransferTokenBuilder($this->member, 10, 'US');
+        $tokenBuilder = new TransferTokenBuilder($this->member, 10, 'EUR');
         $tokenBuilder->setDescription($description);
         $tokenBuilder->addDestination($transferEndpoint);
         $tokenBuilder->setToAlias($alias);
         $tokenBuilder->setToMemberId($this->member->getMemberId());
         $tokenBuilder->setRefId(Strings::generateNonce());
         $tokenRequestBuilder = TokenRequest::builder($tokenBuilder->build());
-        $tokenRequestBuilder->addOption(TokenRequestOptions::ALIAS, Strings::generateNonce());
         $tokenRequestBuilder->addOption(TokenRequestOptions::BANK_ID, 'wood');
-        //$tokenRequestBuilder->setCustomizationId(Strings::generateNonce());
+        $tokenRequestBuilder->addOption(TokenRequestOptions::REDIRECT_URL, $redirectUrl);
         $request = $tokenRequestBuilder->build();
         //////////////////
         //$request = \Tokenio\TokenRequest::transferTokenRequestBuilder($amount, $currency)
@@ -144,7 +143,7 @@ class TokenSample
         //   ->build();
         //////////////////
         $requestId = $this->member->storeTokenRequest($request);
-        $requestUrl = $this->tokenClient->generateTokenRequestUrl($requestId);
+        $requestUrl = $this->tokenClient->generateTokenRequestUrl($requestId, '', $csrfToken);
         return $requestUrl;
     }
 
