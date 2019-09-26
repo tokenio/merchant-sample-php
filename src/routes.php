@@ -36,7 +36,7 @@ class TokenSample
         $keyStore = new UnsecuredFileSystemKeyStore($keyStoreDirectory);
         $builder = new TokenClientBuilder();
         $builder->developerKey('4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI');
-        $builder->connectTo(TokenCluster::get(TokenEnvironment::SANDBOX));
+        $builder->connectTo(TokenCluster::get(TokenEnvironment::DEVELOPMENT));
         $builder->withKeyStore($keyStore);
         return $builder->build();
     }
@@ -143,8 +143,8 @@ class TokenSample
         //   ->build();
         //////////////////
         $requestId = $this->member->storeTokenRequest($request);
-        $requestUrl = $this->tokenClient->generateTokenRequestUrl($requestId, '', $csrfToken);
-        return $requestUrl;
+
+        return $this->tokenClient->generateTokenRequestUrl($requestId, '', $csrfToken);
     }
 
     public function getTokenRequestCallback($callbackUrl, $csrfToken){
