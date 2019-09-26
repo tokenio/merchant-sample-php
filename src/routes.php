@@ -9,6 +9,10 @@ use Tokenio\TokenEnvironment;
 use Tokenio\TokenClientBuilder;
 use Tokenio\Security\UnsecuredFileSystemKeyStore;
 use Tokenio\Util\Strings;
+use Tokenio\TransferTokenBuilder;
+use Tokenio\TokenRequestOptions;
+use Tokenio\TokenRequest;
+
 
 class TokenSample
 {
@@ -31,6 +35,7 @@ class TokenSample
         /** @var UnsecuredFileSystemKeyStore */
         $keyStore = new UnsecuredFileSystemKeyStore($keyStoreDirectory);
         $builder = new TokenClientBuilder();
+        $builder->developerKey('4qY7lqQw8NOl9gng0ZHgT4xdiDqxqoGVutuZwrUYQsI');
         $builder->connectTo(TokenCluster::get(TokenEnvironment::SANDBOX));
         $builder->withKeyStore($keyStore);
         return $builder->build();
@@ -115,18 +120,32 @@ class TokenSample
         $transferEndpoint = new TransferEndpoint();
         $transferEndpoint->setAccount($destination);
 
-        $request = \Tokenio\TokenRequest::transferTokenRequestBuilder($amount, $currency)
-            ->setDescription($description)
-            ->addDestination($transferEndpoint)
-            ->setRefId(Strings::generateNonce())
-            ->setToAlias($alias)
-            ->setToMemberId($this->member->getMemberId())
-            ->setRedirectUrl($redirectUrl)
-            ->setCsrfToken($csrfToken)
-            ->build();
+        //////////////
+        $tokenBuilder = new TransferTokenBuilder($this->member, 10, 'US');
+        $tokenBuilder->setDescription($description);
+        $tokenBuilder->addDestination($transferEndpoint);
+        $tokenBuilder->setToAlias($alias);
+        $tokenBuilder->setToMemberId($this->member->getMemberId());
+        $tokenBuilder->setRefId(Strings::generateNonce());
+        $tokenRequestBuilder = TokenRequest::builder($tokenBuilder->build());
+        $tokenRequestBuilder->addOption(TokenRequestOptions::ALIAS, Strings::generateNonce());
+        $tokenRequestBuilder->addOption(TokenRequestOptions::BANK_ID, 'wood');
+        //$tokenRequestBuilder->setCustomizationId(Strings::generateNonce());
+        $request = $tokenRequestBuilder->build();
+        //////////////////
+        //$request = \Tokenio\TokenRequest::transferTokenRequestBuilder($amount, $currency)
+        //    ->setDescription($description)
+        //    ->addDestination($transferEndpoint)
+        //    ->setRefId(Strings::generateNonce())
+        //    ->setToAlias($alias)
+        //    ->setToMemberId($this->member->getMemberId())
+        //    ->setRedirectUrl($redirectUrl)
+        //    ->setCsrfToken($csrfToken)
+        //   ->build();
+        //////////////////
         $requestId = $this->member->storeTokenRequest($request);
-
-        return $this->tokenClient->generateTokenRequestUrl($requestId);
+        $requestUrl = $this->tokenClient->generateTokenRequestUrl($requestId);
+        return $requestUrl;
     }
 
     public function getTokenRequestCallback($callbackUrl, $csrfToken){
